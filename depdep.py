@@ -4,11 +4,9 @@ try:
         import sys
         from lib.controller import Controller
         from lib.core.common import *
-        from lib.core.version import *
 except ImportError,e:
         import sys
         sys.stdout.write("%s\n" %e)
-        print exit_message
         sys.exit(1)
 
 
