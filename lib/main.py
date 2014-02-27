@@ -188,17 +188,17 @@ class Main:
 
 		share_status = self.is_sharestatus_file()
 		if share_status :
-			print "SessionStatus Dosyasi Bulundu, Isleme Konulacak  ..."
+			print "SessionStatus exists , go go go ..."
 			rest_line = self.is_sharestatus_file()
 			if rest_line:
 				mount_detect.run(int(rest_line))
 			else:
-				print "SessionStatus Dosyasindan Veri Cekilemedi"
+				print "Error getting data from SessionStatus file"
 				sys.exit(1)
 		else:
 			share_file = self.is_share_file()
 			if share_file:
-				print "SessionStatus Dosyasi Yok Ancak Session.Share Dosyasi Var ve Isleme Konulacak ..."
+				print "There is no SessionStatus file but Share file exists , go go go ..."
 				mount_detect.run(0)
 			else:
 				print "There is no session file. Bye ..."
