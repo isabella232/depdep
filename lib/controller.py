@@ -6,7 +6,6 @@ try:
 except ImportError,e:
         import sys
         sys.stdout.write("%s\n" %e)
-        print exit_message
         sys.exit(1)
 
 
@@ -37,5 +36,4 @@ class Controller:
                 	depdep.run()
 		except Exception, err_mess:
 			print err_mess
-			print exit_message	
-			sys.exit(2)
+			sys.exit(1)

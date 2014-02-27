@@ -21,6 +21,5 @@ if __name__ == "__main__":
        		controller.run()
 	except Exception, err_mess:
 		print err_mess
-		print exit_message	
-		sys.exit(2)
+		sys.exit(1)
  

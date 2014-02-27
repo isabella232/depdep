@@ -115,7 +115,7 @@ class Main:
 			session_file = open(self.share_session,"a")		
 		except Exception, err_mess:
 			print err_mess
-			sys.exit(3)
+			sys.exit(1)
 
 		sess_id = str(self.session_id) + "," + ip + "," + path + "\n"
 
@@ -136,7 +136,7 @@ class Main:
 			run_smbclient = "%s -L %s -N -g 2>/dev/null"% (self.smbclient_path, ip)
 
 		# debug
-		print "Command to run: " + run_smbclient
+		#print "Command to run: " + run_smbclient
 
                 proc = subprocess.Popen([run_smbclient], shell = True, stdout = subprocess.PIPE,)
 
@@ -177,7 +177,7 @@ class Main:
                         	output_file = self.config_result["output_file"]	
 			
 				# debug
-				print "Thread count to run nmap %s"% thread_count
+				#print "Thread count to run nmap %s"% thread_count
 
                         	pool = ThreadPool(thread_count)
                         	for ip in nmap_result:
@@ -194,7 +194,7 @@ class Main:
 				mount_detect.run(int(rest_line))
 			else:
 				print "SessionStatus Dosyasindan Veri Cekilemedi"
-				sys.exit(11)
+				sys.exit(1)
 		else:
 			share_file = self.is_share_file()
 			if share_file:
@@ -202,4 +202,4 @@ class Main:
 				mount_detect.run(0)
 			else:
 				print "There is no session file. Bye ..."
-				sys.exit(22)
+				sys.exit(1)

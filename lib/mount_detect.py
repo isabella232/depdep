@@ -10,7 +10,6 @@ try:
 except ImportError,e:
         import sys
         sys.stdout.write("%s\n" %e)
-        print exit_message
         sys.exit(1)
 
 
@@ -35,8 +34,7 @@ class MountDetect:
 			sock.connect((self.tika_ip, self.tika_port)) 		
 		except:
 			print "Tikaya Baglanti Saglanamadi"
-			print exit_message
-			sys.exit(22)	
+			sys.exit(1)	
 
 		self.depdep_mount = "/mnt/depdep"
 		if not os.path.exists(self.depdep_mount):
@@ -96,7 +94,7 @@ class MountDetect:
 				self.filename_reg[reg_filename] = self.filename_info
 				self.filename_info = []
 			else:
-				reg = re.compile(reg_name)
+				reg_filename = re.compile(reg_name)
 				self.filename_info.append(fcontent_type)
                                 self.filename_info.append(fcontent_desc)
 				self.filename_reg[reg_filename] = self.filename_info
@@ -205,7 +203,7 @@ class MountDetect:
 				mount_cmd = ['%s -o guest  %s %s'% (self.mount_path, remote_mount_point, local_mount_point)]
 		
 			# debug
-			print "Mounting with command: " + mount_cmd[0]	
+			#print "Mounting with command: " + mount_cmd[0]	
 			proc = subprocess.Popen(mount_cmd, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 			out = proc.communicate()[0]
 	
@@ -245,7 +243,8 @@ class MountDetect:
 
 		find_cmd = self.find_path + " " + path + " " + self.find_cmd_opt
 		# debug 
-		print "Content analysis running command: " + find_cmd
+		#print "Content analysis running command: " + find_cmd
+
 		proc = subprocess.Popen(find_cmd, shell = True, stdout = subprocess.PIPE)
 
 		for file_name in iter(proc.stdout.readline, ''):
@@ -293,12 +292,14 @@ class MountDetect:
 				ret = self.mount_device("mount", remote_mount_point, local_mount_point)
 				if ret == 0:
 					# debug
-					print "Device mounted: " + local_mount_point
+					#print "Device mounted: " + local_mount_point
+
 					self.run_find_command(local_mount_point)
 					mnt_ret = self.mount_device("umount", local_mount_point)
 				else:
 					# debug
-					print "Device cannot be mounted: " + remote_mount_point
+					#print "Device cannot be mounted: " + remote_mount_point
+
 					if os.path.exists(local_mount_point):
 						os.rmdir(local_mount_point)
 			else:
@@ -315,7 +316,7 @@ class MountDetect:
 
 		self.thread_count = self.config_result["content_thread"]
 		# debug
-		print "Thread count to run mount %s"% self.thread_count
+		#print "Thread count to run mount %s"% self.thread_count
 
 		pool = ThreadPool(int(self.thread_count))
 		if session_id == 0:
@@ -323,8 +324,7 @@ class MountDetect:
 				read_file = open(self.share_session, "r").read().splitlines()
 			except Exception, err_mess:
 				print err_mess
-				print exit_message
-				sys.exit(22)	
+				sys.exit(1)	
 			
 			for line in read_file:	
 				pool.add_task(self.mount_sharing, line)
@@ -335,7 +335,7 @@ class MountDetect:
 			session_id = session_id + 1
 		else:
 			# debug 
-			print "Session files will be used ..."
+			#print "Session files will be used ..."
 
 			while True:
 				if self.get_session(session_id):

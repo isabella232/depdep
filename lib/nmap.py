@@ -7,8 +7,7 @@ try:
 except ImportError,e:
         import sys
         sys.stdout.write("%s\n" %e)
-        print exit_message
-        sys.exit(7)
+        sys.exit(1)
 
 
 
