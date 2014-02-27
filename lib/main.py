@@ -84,6 +84,7 @@ class Main:
 			if re.match(self.status_reg, line):
 		 		return line
 
+		
 		return None				
 	
 
@@ -184,22 +185,38 @@ class Main:
                                 	pool.add_task(self.list_sharing, ip, output_file)
                         	pool.wait_completion()
 
-		mount_detect =  MountDetect(self.config_file, self.share_session, self.sharestatus_session, self.mount_path, self.umount_path, self.find_path, self.curl_path)
+
+		try:
+			mount_detect =  MountDetect(self.config_file, self.share_session, self.sharestatus_session, self.mount_path, self.umount_path, self.find_path, self.curl_path)
+		except:
+			print "Error when initializing mountdetect class ..."
+			sys.exit(1)
+
 
 		share_status = self.is_sharestatus_file()
+
+		# if share status file exists
 		if share_status :
+			#debug
 			print "SessionStatus exists , go go go ..."
+
 			rest_line = self.is_sharestatus_file()
 			if rest_line:
 				mount_detect.run(int(rest_line))
 			else:
 				print "Error getting data from SessionStatus file"
 				sys.exit(1)
+
+		# if share status file doesn't exists
 		else:
 			share_file = self.is_share_file()
+			# if share.session file exists
 			if share_file:
+				#debug
 				print "There is no SessionStatus file but Share file exists , go go go ..."
 				mount_detect.run(0)
+			# if share.session file doesn't exists
 			else:
 				print "There is no session file. Bye ..."
 				sys.exit(1)
+

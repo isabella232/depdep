@@ -341,8 +341,10 @@ class MountDetect:
 				if self.get_session(session_id):
 					line = self.get_session(session_id)
 					pool.add_task(self.mount_sharing, line)
+
 					self.write_session_id(str(session_id))
 					session_id = int(session_id) + 1
 				else:
 					pool.wait_completion()
 					break
+
