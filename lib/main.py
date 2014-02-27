@@ -51,7 +51,6 @@ class Main:
                         devnull.close()
                         if is_pkg_exists != 0:
                                 print >> sys.stderr,  bcolors.OKBLUE + "Error : " + bcolors.ENDC + bcolors.FAIL + "\"%s\""% (pkg) + bcolors.ENDC + bcolors.OKBLUE + " is not installed !!!" + bcolors.ENDC
-	                        print exit_message
 	                        sys.exit(2)
 
 			if type(packages[pkg]) == type(""):
