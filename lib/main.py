@@ -57,13 +57,11 @@ class Main:
 			if type(packages[pkg]) == type(""):
                         	if not os.path.isfile(packages[pkg]):
                                 	print >> sys.stderr,  bcolors.OKBLUE + "Error : " + bcolors.ENDC + bcolors.FAIL + "Package %s exists but file %s doesn't exists"% (pkg,packages[pkg])
-                                	print exit_message
                                 	sys.exit(3)
 			else:
 				for mount_pkg in packages[pkg]:
 					if not os.path.isfile(mount_pkg):
                                 		print >> sys.stderr,  bcolors.OKBLUE + "Error : " + bcolors.ENDC + bcolors.FAIL + "Package %s exists but file %s doesn't exists"% (pkg, mount_pkg)
-                                		print exit_message
                                 		sys.exit(4)
 
 		self.config_result = ConfigParser.parse(self.config_file)
@@ -118,7 +116,6 @@ class Main:
 			session_file = open(self.share_session,"a")		
 		except Exception, err_mess:
 			print err_mess
-			print exit_message
 			sys.exit(3)
 
 		sess_id = str(self.session_id) + "," + ip + "," + path + "\n"
@@ -198,7 +195,6 @@ class Main:
 				mount_detect.run(int(rest_line))
 			else:
 				print "SessionStatus Dosyasindan Veri Cekilemedi"
-				print exit_message
 				sys.exit(11)
 		else:
 			share_file = self.is_share_file()
@@ -207,5 +203,4 @@ class Main:
 				mount_detect.run(0)
 			else:
 				print "There is no session file. Bye ..."
-				print exit_message
 				sys.exit(22)
