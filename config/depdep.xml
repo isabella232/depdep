@@ -6,10 +6,10 @@
 	<target>
 		<!-- included IPs can be given only in CIDR notation -->
 		<include-ip>
-			127.0.0.1/32
+			192.168.1.0/24
 		</include-ip>	
 		<exclude-ip>
-			192.168.1.0/24
+			192.168.1.4-10
 		</exclude-ip>	
 	</target>
 	<scanning>
