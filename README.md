@@ -2,4 +2,5 @@
 http://www.galkan.net/2014/02/paylasimlardaki-gizli-tehlikeler-ve-kritik-verilerin-ortaya-cikartilmasi-depdep.html
 
 ### English
+http://www.galkan.net/2014/02/how-to-determine-critical-data-in-netwok-sharing.html
 
