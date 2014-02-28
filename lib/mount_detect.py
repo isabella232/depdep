@@ -315,6 +315,7 @@ class MountDetect:
 		"""
 
 		self.thread_count = self.config_result["content_thread"]
+
 		# debug
 		#print "Thread count to run mount %s"% self.thread_count
 
@@ -336,15 +337,13 @@ class MountDetect:
 		else:
 			# debug 
 			#print "Session files will be used ..."
+	
+			pool = ThreadPool(int(self.thread_count))
+			while self.get_session(session_id):
+				line = self.get_session(session_id)
+				pool.add_task(self.mount_sharing, line)
 
-			while True:
-				if self.get_session(session_id):
-					line = self.get_session(session_id)
-					pool.add_task(self.mount_sharing, line)
-
-					self.write_session_id(str(session_id))
-					session_id = int(session_id) + 1
-				else:
-					pool.wait_completion()
-					break
-
+				self.write_session_id(str(session_id))
+				session_id = int(session_id) + 1
+			
+			pool.wait_completion()

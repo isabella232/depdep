@@ -13,7 +13,7 @@
 		<thread>5</thread>
 	</scanning>
 	<settings>
-		<max_filesize> 10M </max_filesize>
+		<max_filesize> 5M </max_filesize>
 		<output_file><![CDATA[ /tmp/depdep.result ]]></output_file>
                 <credentials>
                         <username><![CDATA[]]></username>
@@ -22,17 +22,15 @@
                 </credentials>
 	</settings>
 	<content>
-		<thread>11</thread>
+		<thread>10</thread>
 		<filetype>
 			<!-- 
 				included or excluded file types 
 				if include-type elements exist, then any exclude-type elements will not be processed!
 			-->
-			<include-type>pdf</include-type>
 			<include-type>txt</include-type>
 			<include-type>xlsx</include-type>
 			<include-type>docx</include-type>
-			<include-type>pptx</include-type>
 		</filetype>
 		<filename>
 			<!-- 
@@ -40,9 +38,12 @@
 				use OR operations with the keyword definitions, you must use regex. For instance to use password
 				and username keywords, you can use password[^u]+username regex ...
 			-->
+			<!--
 			<keyword case="insensitive" type="plain" description="version information">
 				<![CDATA[ version ]]>
 			</keyword>
+			-->
+
                         <keyword case="insensitive" type="plain" description="password including file names">
                                 <![CDATA[ password ]]>
                         </keyword>
@@ -52,12 +53,7 @@
 			<!-- 
 				if there are more than one keyword element exist, OR operation will be applied
 			-->		
-                        <!--
-                                if there are more than one keyword element exist, OR operation will be applied
-                        -->
-                        <keyword case="insensitive" type="plain" description="password including file contents">
-                                <![CDATA[ password ]]>
-                        </keyword>
+			<!--
                         <keyword case="insensitive" type="regex" description="a visa credit card number">
                                 <![CDATA[([^0-9-]|^)(4[0-9]{3}( |-|)([0-9]{4})( |-|)([0-9]{4})( |-|)([0-9]{4}))([^0-9-]|$)]]>
                         </keyword>
@@ -72,6 +68,11 @@
                         </keyword>
                         <keyword case="insensitive" type="regex" description="a very basic credit card number">
                                 <![CDATA[(([0-9]{4}\-){3}[0-9]{4})]]>
+                        </keyword>
+			-->
+			
+                        <keyword case="insensitive" type="plain" description="password including file contents">
+                                <![CDATA[ password ]]>
                         </keyword>
 
 		</filecontent>

@@ -198,7 +198,7 @@ class Main:
 		# if share status file exists
 		if share_status :
 			#debug
-			print "SessionStatus exists , go go go ..."
+			#print "SessionStatus exists , go go go ..."
 
 			rest_line = self.is_sharestatus_file()
 			if rest_line:
@@ -213,10 +213,11 @@ class Main:
 			# if share.session file exists
 			if share_file:
 				#debug
-				print "There is no SessionStatus file but Share file exists , go go go ..."
+				#print "There is no SessionStatus file but Share file exists , go go go ..."
 				mount_detect.run(0)
 			# if share.session file doesn't exists
 			else:
-				print "There is no session file. Bye ..."
+				#debug
+				#print "There is no session file. Bye ..."
 				sys.exit(1)
 
