@@ -8,5 +8,8 @@ http://www.galkan.net/2014/03/paylasimlardaki-gizli-tehlikeler-ve-kritik-veriler
 http://www.galkan.net/2014/03/how-to-determine-critical-data-in-netwok-sharing.html
 
 ### To Do:
-- Detect and analyze Ftp sharing
-- Detect and analyze Linux sharing
+- Process using hostname or ip address
+- Advanced logging operations
+- Advanced debugging operations
+- Detect & process linux shares (NFS)
+- Detect & process FTP shares 
