@@ -1,4 +1,4 @@
-### LICENCE
+### LICENSE
 https://github.com/galkan/depdep/blob/master/LICENSE.txt
 
 ### Türkçe
