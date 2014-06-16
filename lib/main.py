@@ -173,11 +173,11 @@ class Main:
                         	pool.wait_completion()
 
 
-		try:
-			mount_detect =  MountDetect(self.config_file, self.share_session, self.sharestatus_session, self.mount_path, self.umount_path, self.find_path, self.curl_path)
-		except:
-			print "Error when initializing mountdetect class ..."
-			sys.exit(1)
+		#try:
+		mount_detect =  MountDetect(self.config_file, self.share_session, self.sharestatus_session, self.mount_path, self.umount_path, self.find_path, self.curl_path)
+		#except:
+		#print "Error when initializing mountdetect class ..."
+		#sys.exit(1)
 
 
 		share_status = self.is_sharestatus_file()
