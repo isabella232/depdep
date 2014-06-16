@@ -46,7 +46,7 @@ class Main:
 
                 packages = [ self.nmap_path, self.mount_cifs_path, self.umount_path, self.mount_path, self.smbclient_path, self.find_path, self.curl_path ]
                 for pkg in packages:
-                        if not os.path.isfilepkg):
+                        if not os.path.isfile(pkg):
                                 	print >> sys.stderr,  bcolors.OKBLUE + "Error : " + bcolors.ENDC + bcolors.FAIL + "Package %s exists but file %s doesn't exists"% (pkg,packages[pkg])
                                 	sys.exit(1)
 			
