@@ -44,25 +44,12 @@ class Main:
                 self.find_path = "/usr/bin/find"
 		self.curl_path = "/usr/bin/curl"
 
-                packages = {"nmap":self.nmap_path, "cifs-utils":self.mount_cifs_path, "mount":(self.umount_path,self.mount_path), "smbclient":self.smbclient_path, "samba4-clients":self.smbclient_path, "findutils":self.find_path, "curl":self.curl_path}
-                for pkg in packages.keys():
-                        devnull = open(os.devnull,"w")
-                        is_pkg_exists = subprocess.call(["dpkg","-s", pkg],stdout=devnull ,stderr=subprocess.STDOUT)
-                        devnull.close()
-                        if is_pkg_exists != 0:
-                                print >> sys.stderr,  bcolors.OKBLUE + "Error : " + bcolors.ENDC + bcolors.FAIL + "\"%s\""% (pkg) + bcolors.ENDC + bcolors.OKBLUE + " is not installed !!!" + bcolors.ENDC
-	                        sys.exit(2)
-
-			if type(packages[pkg]) == type(""):
-                        	if not os.path.isfile(packages[pkg]):
+                packages = [ self.nmap_path, self.mount_cifs_path, self.umount_path, self.mount_path), self.smbclient_path, self.find_path, self.curl_path ]
+                for pkg in packages:
+                        if not os.path.isfilepkg):
                                 	print >> sys.stderr,  bcolors.OKBLUE + "Error : " + bcolors.ENDC + bcolors.FAIL + "Package %s exists but file %s doesn't exists"% (pkg,packages[pkg])
-                                	sys.exit(3)
-			else:
-				for mount_pkg in packages[pkg]:
-					if not os.path.isfile(mount_pkg):
-                                		print >> sys.stderr,  bcolors.OKBLUE + "Error : " + bcolors.ENDC + bcolors.FAIL + "Package %s exists but file %s doesn't exists"% (pkg, mount_pkg)
-                                		sys.exit(4)
-
+                                	sys.exit(1)
+			
 		self.config_result = ConfigParser.parse(self.config_file)
 		
 
