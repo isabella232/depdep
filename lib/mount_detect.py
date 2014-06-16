@@ -33,7 +33,7 @@ class MountDetect:
 		try:
 			sock.connect((self.tika_ip, self.tika_port)) 		
 		except:
-			print "Tikaya Baglanti Saglanamadi"
+			print "Cannot connect to Tika !!!"
 			sys.exit(1)	
 
 		self.depdep_mount = "/mnt/depdep"
