@@ -7,7 +7,7 @@
 tika_path="/opt/tika/tika-app-1.4.jar"
 ps_name_tika="`basename $tika_path`"
 java_path="/usr/bin/java"
-
+tika_port="9998"
 
 if [ ! -f $tika_path ]
 then
@@ -37,7 +37,7 @@ case "$1" in
 	then
 	    echo "[-] Tika is already running !!!"
 	else
-	    $java_path -jar $tika_path >/dev/null 2>/dev/null &
+	    $java_path -jar $tika_path --server $tika_port >/dev/null 2>/dev/null &
 	    
 	    if [ $? -eq 0 ]
 	    then
