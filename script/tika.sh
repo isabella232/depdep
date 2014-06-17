@@ -3,7 +3,8 @@
 # Apache Tika Start Stop Script
 # description: Control Apache Tika
 
-tika_path="/opt/tika/tika-app-1.5.jar"
+
+tika_path="/opt/tika/tika-app-1.4.jar"
 ps_name_tika="`basename $tika_path`"
 java_path="/usr/bin/java"
 
