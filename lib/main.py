@@ -48,8 +48,7 @@ class Main:
                 packages = [ self.nmap_path, self.mount_cifs_path, self.umount_path, self.mount_path, self.smbclient_path, self.find_path, self.curl_path, self.java] 
                 for pkg in packages:
                         if not os.path.isfile(pkg):
-                                        print >> sys.stderr,  bcolors.OKBLUE + "Error : " + bcolors.ENDC + bcolors.FAIL + "Package %s doesn't exists"% (pkg)
- + bcolors.OKBLUE  + bcolors.ENDC
+                                        print >> sys.stderr,  bcolors.OKBLUE + "Error : " + bcolors.ENDC + bcolors.FAIL + "Package %s doesn't exists"% (pkg) + bcolors.OKBLUE  + bcolors.ENDC
                                         sys.exit(1)
 
                 self.config_result = ConfigParser.parse(self.config_file)
