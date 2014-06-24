@@ -1,13 +1,13 @@
 try:
 	import sys
 	import re
-	import subprocess
 	import os
-	from core.configparser import ConfigParser
+	import subprocess
 	from nmap import Nmap
+	from core.common import *
+	from core.configparser import ConfigParser
 	from mount_detect import MountDetect
 	from core.threadpool import Worker,ThreadPool
-	from core.common import *
 except ImportError,e:
         import sys
         sys.stdout.write("%s\n" %e)
@@ -19,13 +19,14 @@ class Main:
 		Main Class and Functions ...
 	"""
 
-	def __init__(self, config_file, wipe = None):
+	def __init__(self, config_file, verbose, wipe = None):
 		"""
 			Nmap init functions set variables
 		"""
 
 		self.config_file = config_file
 		self.wipe = wipe
+		self.verbose = verbose
 		self.session_id = 0
 
 		self.share_reg = re.compile("^Disk\|[^$]+\|")
@@ -48,7 +49,7 @@ class Main:
                 packages = [ self.nmap_path, self.mount_cifs_path, self.umount_path, self.mount_path, self.smbclient_path, self.find_path, self.curl_path, self.java] 
                 for pkg in packages:
                         if not os.path.isfile(pkg):
-                                        print >> sys.stderr,  bcolors.OKBLUE + "Error : " + bcolors.ENDC + bcolors.FAIL + "Package %s doesn't exists"% (pkg) + bcolors.OKBLUE  + bcolors.ENDC
+                                        print >> sys.stderr,  bcolors.OKBLUE + "Error : " + bcolors.ENDC + bcolors.FAIL + "Package %s doesn't exists"%(pkg) + bcolors.OKBLUE  + bcolors.ENDC
                                         sys.exit(1)
 
                 self.config_result = ConfigParser.parse(self.config_file)
@@ -72,7 +73,6 @@ class Main:
 			if re.match(self.status_reg, line):
 		 		return line
 
-		
 		return None				
 	
 
@@ -125,7 +125,8 @@ class Main:
 			run_smbclient = "%s -L %s -N -g 2>/dev/null"% (self.smbclient_path, ip)
 
 		# debug
-		#print "Command to run: " + run_smbclient
+		if self.verbose > 0:
+			print >> sys.stderr, "Command to run: " + run_smbclient
 
                 proc = subprocess.Popen([run_smbclient], shell = True, stdout = subprocess.PIPE,)
 
@@ -166,7 +167,8 @@ class Main:
                         	output_file = self.config_result["output_file"]	
 			
 				# debug
-				#print "Thread count to run nmap %s"% thread_count
+				if self.verbose > 0:
+					print >> sys.stderr, "Thread count to run nmap %s"% thread_count
 
                         	pool = ThreadPool(thread_count)
                         	for ip in nmap_result:
@@ -174,19 +176,19 @@ class Main:
                         	pool.wait_completion()
 
 
-		#try:
-		mount_detect =  MountDetect(self.config_file, self.share_session, self.sharestatus_session, self.mount_path, self.umount_path, self.find_path, self.curl_path)
-		#except:
-		#print "Error when initializing mountdetect class ..."
-		#sys.exit(1)
-
+		try:
+			mount_detect =  MountDetect(self.config_file, self.share_session, self.sharestatus_session, self.mount_path, self.umount_path, self.find_path, self.curl_path, self.verbose)
+		except:
+			print >> sys.stderr, "Error when initializing mountdetect class !!!"
+			sys.exit(1)
 
 		share_status = self.is_sharestatus_file()
 
 		# if share status file exists
 		if share_status :
 			#debug
-			#print "SessionStatus exists , go go go ..."
+			if self.verbose > 0:
+				print >> sys.stderr, "SessionStatus exists , go go go ..."
 
 			rest_line = self.is_sharestatus_file()
 			if rest_line:
@@ -201,11 +203,13 @@ class Main:
 			# if share.session file exists
 			if share_file:
 				#debug
-				#print "There is no SessionStatus file but Share file exists , go go go ..."
+				if self.verbose > 0:
+					print >> sys.stderr,  "There is no SessionStatus file but Share file exists , go go go ..."
 				mount_detect.run(0)
 			# if share.session file doesn't exists
 			else:
 				#debug
-				#print "There is no session file. Bye ..."
+				if self.verbose > 0:
+					print sys.stderr, "There is no session file. Bye ..."
 				sys.exit(1)
 
