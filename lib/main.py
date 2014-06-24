@@ -45,8 +45,7 @@ class Main:
 		self.curl_path = "/usr/bin/curl"
 		self.java = "/usr/bin/java"
 
-                packages = [ self.nmap_path, self.mount_cifs_path, self.umount_path, self.mount_path, self.smbclient_path, self.find_path, self.curl_path, s
-elf.java] 
+                packages = [ self.nmap_path, self.mount_cifs_path, self.umount_path, self.mount_path, self.smbclient_path, self.find_path, self.curl_path, self.java] 
                 for pkg in packages:
                         if not os.path.isfile(pkg):
                                         print >> sys.stderr,  bcolors.OKBLUE + "Error : " + bcolors.ENDC + bcolors.FAIL + "Package %s doesn't exists"% (pkg)
