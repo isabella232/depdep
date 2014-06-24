@@ -126,7 +126,7 @@ class Main:
 
 		# debug
 		if self.verbose > 0:
-			print >> sys.stderr, "Command to run: " + run_smbclient
+			print "   [+] Command to run: " + run_smbclient
 
                 proc = subprocess.Popen([run_smbclient], shell = True, stdout = subprocess.PIPE,)
 
@@ -168,7 +168,7 @@ class Main:
 			
 				# debug
 				if self.verbose > 0:
-					print >> sys.stderr, "Thread count to run nmap %s"% thread_count
+					print "   [+] Thread count to run nmap %s"% thread_count
 
                         	pool = ThreadPool(thread_count)
                         	for ip in nmap_result:
@@ -188,7 +188,7 @@ class Main:
 		if share_status :
 			#debug
 			if self.verbose > 0:
-				print >> sys.stderr, "SessionStatus exists , go go go ..."
+				print "   [+] SessionStatus exists , go go go ..."
 
 			rest_line = self.is_sharestatus_file()
 			if rest_line:
@@ -204,12 +204,12 @@ class Main:
 			if share_file:
 				#debug
 				if self.verbose > 0:
-					print >> sys.stderr,  "There is no SessionStatus file but Share file exists , go go go ..."
+					print "   [+] There is no SessionStatus file but Share file exists , go go go ..."
 				mount_detect.run(0)
 			# if share.session file doesn't exists
 			else:
 				#debug
 				if self.verbose > 0:
-					print sys.stderr, "There is no session file. Bye ..."
+					print "   [+] There is no session file. Bye ..."
 				sys.exit(1)
 
