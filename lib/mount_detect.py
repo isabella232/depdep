@@ -14,7 +14,7 @@ except ImportError,e:
 
 
 class MountDetect:
-	def __init__(self, config_file, share_session, sharestatus_session, mount_path, umount_path, find_path, curl_path):
+	def __init__(self, config_file, share_session, sharestatus_session, mount_path, umount_path, find_path, curl_path, verbose):
 		"""
 			Initialize functions and variables
 		"""
@@ -25,6 +25,7 @@ class MountDetect:
 		self.umount_path = umount_path
 		self.find_path = find_path
 		self.curl_path = curl_path
+		self.verbose = verbose
 		
 		self.tika_ip = "localhost"
 		self.tika_port = 9998
@@ -203,7 +204,9 @@ class MountDetect:
 				mount_cmd = ['%s -o guest  %s %s'% (self.mount_path, remote_mount_point, local_mount_point)]
 		
 			# debug
-			#print "Mounting with command: " + mount_cmd[0]	
+			if self.verbose > 0:
+				print >> sys.stderr, "Mounting with command: " + mount_cmd[0]	
+
 			proc = subprocess.Popen(mount_cmd, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 			out = proc.communicate()[0]
 	
@@ -243,7 +246,8 @@ class MountDetect:
 
 		find_cmd = self.find_path + " " + path + " " + self.find_cmd_opt
 		# debug 
-		#print "Content analysis running command: " + find_cmd
+		if self.verbose > 0:	
+			print >> sys.stderr, "Content analysis running command: " + find_cmd
 
 		proc = subprocess.Popen(find_cmd, shell = True, stdout = subprocess.PIPE)
 
@@ -292,13 +296,15 @@ class MountDetect:
 				ret = self.mount_device("mount", remote_mount_point, local_mount_point)
 				if ret == 0:
 					# debug
-					#print "Device mounted: " + local_mount_point
+					if self.verbose > 0:
+						print >> sys.stderr, "Device mounted: " + local_mount_point
 
 					self.run_find_command(local_mount_point)
 					mnt_ret = self.mount_device("umount", local_mount_point)
 				else:
 					# debug
-					#print "Device cannot be mounted: " + remote_mount_point
+					if self.verbose > 0 :
+						print >> sys.stderr, "Device cannot be mounted: " + remote_mount_point
 
 					if os.path.exists(local_mount_point):
 						os.rmdir(local_mount_point)
@@ -317,7 +323,8 @@ class MountDetect:
 		self.thread_count = self.config_result["content_thread"]
 
 		# debug
-		#print "Thread count to run mount %s"% self.thread_count
+		if self.verbose > 0:
+			print >> sys.stderr, "Thread count to run mount %s"% self.thread_count
 
 		pool = ThreadPool(int(self.thread_count))
 		if session_id == 0:
@@ -336,7 +343,8 @@ class MountDetect:
 			session_id = session_id + 1
 		else:
 			# debug 
-			#print "Session files will be used ..."
+			if self.verbose > 0:
+				print >> sys.stderr, "Session files will be used ..."
 	
 			pool = ThreadPool(int(self.thread_count))
 			while self.get_session(session_id):

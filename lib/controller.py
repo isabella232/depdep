@@ -1,7 +1,7 @@
 try:
         import sys
-        import argparse
 	import os
+        import argparse
         from main import Main
 except ImportError,e:
         import sys
@@ -20,6 +20,7 @@ class Controller:
                 usage = "Usage: use --help for futher information"
                 parser = argparse.ArgumentParser(description = description, usage = usage)
                 parser.add_argument('-f','--config', dest = 'config', help = 'Configuration File', required = True)
+                parser.add_argument('-v', '--verbose', dest = 'verbose', action = 'store', help = 'Verbose', default = 0, type = int)
                 parser.add_argument('-w', '--wipe', dest = 'wipe', action = 'store', help = 'Wipe All Sessions', type = int)
                 self.args = parser.parse_args()
 
@@ -31,7 +32,7 @@ class Controller:
                         Control DepDep start or stop and daemonize depdep ...
                 """
 
-                depdep = Main(self.args.config, self.args.wipe)
+                depdep = Main(self.args.config, self.args.verbose, self.args.wipe)
 		try:	
                 	depdep.run()
 		except Exception, err_mess:
