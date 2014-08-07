@@ -1,11 +1,6 @@
 
 Depdep is a merciless sentinel which will seek sensitive files containing critical info leaking through your network. Basically, it is a fast and practical sensitive data search tool maintaining personal & commercial data privacy for companies and institutions. It can very well be used by auditors making sure that their network doesn't leak any unauthorized non-compliant data through windows & unix/linux shares.
 The usage is easy and configurable, however, certain technical knowledge is necessary, such as using linux console, ability of writing and understanding basic regular expressions, tough the configuration file comes with several sensitive information patterns, etc.  
- **Future Work:**  
- * Process using hostname or ip address  
- * Advanced logging operations  
- * Advanced debugging operations  
- * Detect & process linux shares (NFS)  
 
 ### Installation
 In order to run depdep succesfully, you have to install some packages. Packages needed to run depdep succesfully are shown below;  
