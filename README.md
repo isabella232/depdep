@@ -44,7 +44,7 @@ After that, you have to configure depdep configuration file, **config/depdep.xml
 Also installation script comes with depdep (**script/installation.sh**). You can easily install depdep via this script. Only thing which you should specify which distro you want to run on. For instance, in order to install depdep on kali follow steps below;  
 ```
  # chmod 755 script/installation.sh  
-#  .script/installation.sh kali  
+ # .script/installation.sh kali  
 ```
 
  ArchAssault has this prepackaged in their repo, you can install it with "**pacman -S depdep-git**".
